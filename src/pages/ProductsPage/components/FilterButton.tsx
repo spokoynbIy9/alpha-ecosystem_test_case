@@ -1,12 +1,14 @@
-import React from "react";
-import { FilterButtonProps } from "../../../types/products";
-const FilterButton: React.FC<FilterButtonProps> = ({
-  handleToggleView,
-  isShowFavor,
-}) => {
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { toggleShowFavorites } from "../../../redux/productsSlice";
+const FilterButton = () => {
+  const dispatch = useAppDispatch();
+  const { show } = useAppSelector((state) => state.products.favorites);
+  const handleToggleView = () => {
+    dispatch(toggleShowFavorites());
+  };
   return (
     <button onClick={handleToggleView}>
-      {isShowFavor ? "Show All Products" : "Show Favorites"}
+      {show ? "Show All Products" : "Show Favorites"}
     </button>
   );
 };

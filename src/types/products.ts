@@ -18,7 +18,7 @@ export type ProductsState = {
   error: string | null;
 };
 
-export type FilterButtonProps = {
-  handleToggleView: () => void;
-  isShowFavor: boolean;
-};
+// export type FilterButtonProps = {
+//   handleToggleView: () => void;
+//   isShowFavor: boolean;
+// };

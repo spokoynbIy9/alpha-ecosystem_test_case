@@ -16,4 +16,11 @@ export type ProductsState = {
   favorites: FavoritesState;
   loading: boolean;
   error: string | null;
+  filters: {
+    searchQuery: string;
+    priceRange: {
+      min: number;
+      max: number;
+    };
+  };
 };

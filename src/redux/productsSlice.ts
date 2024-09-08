@@ -9,6 +9,13 @@ const initialState: ProductsState = {
   },
   loading: false,
   error: null,
+  filters: {
+    searchQuery: "",
+    priceRange: {
+      min: 0,
+      max: 100,
+    },
+  },
 };
 
 export const fetchProducts = createAsyncThunk<Product[]>(
@@ -44,6 +51,15 @@ const productsSlice = createSlice({
     addProduct: (state, action: PayloadAction<Product>) => {
       state.products.push(action.payload);
     },
+    setSearchQuery: (state, action: PayloadAction<string>) => {
+      state.filters.searchQuery = action.payload;
+    },
+    setPriceRange: (
+      state,
+      action: PayloadAction<{ min: number; max: number }>
+    ) => {
+      state.filters.priceRange = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -68,6 +84,12 @@ const productsSlice = createSlice({
   },
 });
 
-export const { deleteProduct, addToFavorite, toggleShowFavorites, addProduct } =
-  productsSlice.actions;
+export const {
+  deleteProduct,
+  addToFavorite,
+  toggleShowFavorites,
+  addProduct,
+  setSearchQuery,
+  setPriceRange,
+} = productsSlice.actions;
 export default productsSlice.reducer;

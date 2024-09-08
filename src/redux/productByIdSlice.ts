@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ProductById } from "../types/productById";
 import axios from "axios";
 import { RootState } from "./store";
-import { isEmptyObject } from "./utils";
+import { isEmptyObject } from "../utils/isEmptyObject";
 const initialState: ProductById = {
   productInfo: {
     id: 0,

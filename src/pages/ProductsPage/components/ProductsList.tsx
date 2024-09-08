@@ -8,11 +8,22 @@ import useStyles from "../styles";
 const ProductsList = () => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
-  const { products, favorites } = useAppSelector((state) => state.products);
+  const { products, favorites, filters } = useAppSelector(
+    (state) => state.products
+  );
 
-  const filteredProducts = favorites.show
-    ? products.filter((product) => favorites.ids.includes(product.id))
-    : products;
+  const filteredProducts = products
+    .filter((product) =>
+      favorites.show ? favorites.ids.includes(product.id) : true
+    )
+    .filter((product) =>
+      product.title.toLowerCase().includes(filters.searchQuery.toLowerCase())
+    )
+    .filter(
+      (product) =>
+        product.price >= filters.priceRange.min &&
+        product.price <= filters.priceRange.max
+    );
 
   useEffect(() => {
     if (products.length === 0) {

@@ -4,10 +4,10 @@ import ProductInfo from "./components/ProductInfo";
 import BackButton from "./components/BackButton";
 const ProductPageById = () => {
   const { id } = useParams();
-
+  const productId = Number(id);
   return (
     <div>
-      <ProductInfo productId={Number(id)} />
+      <ProductInfo productId={productId} />
       <BackButton />
     </div>
   );

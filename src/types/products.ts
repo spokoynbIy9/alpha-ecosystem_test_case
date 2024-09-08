@@ -3,7 +3,7 @@ export type Product = {
   title: string;
   price: number;
   description: string;
-  image: string;
+  image?: string;
 };
 
 type FavoritesState = {
@@ -17,8 +17,3 @@ export type ProductsState = {
   loading: boolean;
   error: string | null;
 };
-
-// export type FilterButtonProps = {
-//   handleToggleView: () => void;
-//   isShowFavor: boolean;
-// };

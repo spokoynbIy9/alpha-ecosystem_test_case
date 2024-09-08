@@ -6,7 +6,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ productId }) => {
   const dispatch = useAppDispatch();
   const { productInfo } = useAppSelector((state) => state.productById);
   useEffect(() => {
-    dispatch(fetchProductById(Number(productId)));
+    dispatch(fetchProductById(productId));
   }, [dispatch, productId]);
   return (
     <div>

@@ -34,21 +34,29 @@ const useStyles = makeStyles({
   productList: {
     display: "flex",
     flexWrap: "wrap",
-    gap: "20px",
-    justifyContent: "center",
+    rowGap: "20px",
+    columnGap: "10px",
+    justifyContent: "space-between",
     padding: 0,
     margin: 0,
   },
   productElement: {
     display: "flex",
     flexDirection: "column",
-    maxWidth: "300px",
+    width: "300px",
     border: "1px solid #000",
     padding: "15px",
     cursor: "pointer",
   },
   productDesc: truncateText(2),
   productTitle: truncateText(1),
+  productsPage_container: {
+    maxWidth: "1240px",
+    margin: "20px auto",
+  },
+  filterButton: {
+    marginBottom: "15px",
+  },
 });
 
 export default useStyles;

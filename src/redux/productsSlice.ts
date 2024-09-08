@@ -41,16 +41,26 @@ const productsSlice = createSlice({
     toggleShowFavorites: (state) => {
       state.favorites.show = !state.favorites.show;
     },
+    addProduct: (state, action: PayloadAction<Product>) => {
+      state.products.push(action.payload);
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchProducts.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchProducts.fulfilled, (state, action) => {
-        state.loading = false;
-        state.products = action.payload;
-      })
+      .addCase(
+        fetchProducts.fulfilled,
+        (state, action: PayloadAction<Product[]>) => {
+          state.loading = false;
+          if (state.products.length > 0) {
+            state.products = [...state.products, ...action.payload];
+          } else {
+            state.products = action.payload;
+          }
+        }
+      )
       .addCase(fetchProducts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Failed to fetch products";
@@ -58,6 +68,6 @@ const productsSlice = createSlice({
   },
 });
 
-export const { deleteProduct, addToFavorite, toggleShowFavorites } =
+export const { deleteProduct, addToFavorite, toggleShowFavorites, addProduct } =
   productsSlice.actions;
 export default productsSlice.reducer;

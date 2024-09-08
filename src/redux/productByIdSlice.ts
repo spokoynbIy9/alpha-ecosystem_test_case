@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ProductById } from "../types/productById";
 import axios from "axios";
+import { RootState } from "./store";
+import { isEmptyObject } from "./utils";
 const initialState: ProductById = {
   productInfo: {
     id: 0,
@@ -15,10 +17,19 @@ const initialState: ProductById = {
 
 export const fetchProductById = createAsyncThunk<
   ProductById["productInfo"],
-  number
->("productById/fetchProductById", async (id) => {
+  number,
+  { state: RootState }
+>("productById/fetchProductById", async (id, { getState }) => {
+  const state = getState();
   const response = await axios.get(`https://fakestoreapi.com/products/${id}`);
-  return response.data;
+  if (isEmptyObject(response.data)) {
+    const localProduct = state.products.products.find(
+      (product) => product.id === id
+    );
+    return localProduct;
+  } else {
+    return response.data;
+  }
 });
 
 const productByIdSlice = createSlice({

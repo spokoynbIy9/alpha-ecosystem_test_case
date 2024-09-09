@@ -40,6 +40,9 @@ const useStyles = makeStyles({
     padding: 0,
     margin: 0,
   },
+  productsList_container: {
+    gridColumn: "1 / 3",
+  },
   productElement: {
     display: "flex",
     flexDirection: "column",
@@ -53,9 +56,32 @@ const useStyles = makeStyles({
   productsPage_container: {
     maxWidth: "1240px",
     margin: "20px auto",
+    display: "grid",
+    gridTemplateColumns: "repeat(2,1fr)",
+    gridTemplateRows: "auto auto",
   },
   filterButton: {
-    marginBottom: "15px",
+    backgroundColor: "#f0f0f0",
+    fontFamily: "Segoe UI",
+    fontSize: "16px",
+    color: "#333",
+    padding: "10px 20px",
+    textDecoration: "none",
+    borderRadius: "4px",
+    border: "1px solid #ccc",
+    fontWeight: "bold",
+    transition: "background-color 0.3s ease, color 0.3s ease",
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: "#d9d9d9",
+      color: "#111",
+    },
+  },
+  filtersContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "20px",
   },
 });
 

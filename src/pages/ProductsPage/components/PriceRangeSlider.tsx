@@ -1,7 +1,6 @@
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { setPriceRange } from "../../../redux/productsSlice";
 import Slider from "@mui/material/Slider";
-import PropTypes from "prop-types";
 const PriceRangeSlider = () => {
   const dispatch = useAppDispatch();
   const priceRange = useAppSelector(

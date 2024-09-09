@@ -12,6 +12,10 @@ const ProductsList = () => {
     (state) => state.products
   );
 
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch, products.length]);
+
   const filteredProducts = products
     .filter((product) =>
       favorites.show ? favorites.ids.includes(product.id) : true
@@ -24,12 +28,6 @@ const ProductsList = () => {
         product.price >= filters.priceRange.min &&
         product.price <= filters.priceRange.max
     );
-
-  useEffect(() => {
-    if (products.length === 0) {
-      dispatch(fetchProducts());
-    }
-  }, [dispatch, products.length]);
 
   return (
     <>

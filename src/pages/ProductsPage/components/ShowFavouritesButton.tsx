@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { toggleShowFavorites } from "../../../redux/productsSlice";
 import useStyles from "../styles";
-const FilterButton = () => {
+const ShowFavouritesButton = () => {
   const dispatch = useAppDispatch();
   const { show } = useAppSelector((state) => state.products.favorites);
 
@@ -16,4 +16,4 @@ const FilterButton = () => {
   );
 };
 
-export default FilterButton;
+export default ShowFavouritesButton;

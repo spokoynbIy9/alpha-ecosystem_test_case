@@ -7,11 +7,13 @@ import { useNavigate } from "react-router-dom";
 const ProductForm = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [isProductAdded, setIsProductAdded] = useState(false);
   const [newProduct, setNewProduct] = useState({
     id: 0,
     title: "",
     price: 0,
     description: "",
+    image: "",
   });
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -27,9 +29,8 @@ const ProductForm = () => {
       const updatedProduct = { ...newProduct, id: data.id * Date.now() };
 
       dispatch(addProduct(updatedProduct));
-      navigate(-1);
-
-      setNewProduct({ id: 0, title: "", price: 0, description: "" });
+      setIsProductAdded(true);
+      setNewProduct({ id: 0, title: "", price: 0, description: "", image: "" });
     } catch (error) {
       console.error("Error adding product", error);
     }
@@ -38,6 +39,12 @@ const ProductForm = () => {
     event.preventDefault();
     addNewProduct();
   };
+  useEffect(() => {
+    if (isProductAdded) {
+      navigate(-1);
+      setIsProductAdded(false);
+    }
+  }, [isProductAdded, navigate]);
   return (
     <form onSubmit={handleSubmit} className={classes.productForm}>
       <input
@@ -68,7 +75,14 @@ const ProductForm = () => {
         onChange={handleChange}
         required
       />
-      <button type="submit">Отправить</button>
+      <input
+        type="text"
+        name="image"
+        placeholder="image"
+        onChange={handleChange}
+        required
+      />
+      <button type="submit">Send</button>
     </form>
   );
 };

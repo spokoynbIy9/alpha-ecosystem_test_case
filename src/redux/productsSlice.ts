@@ -25,7 +25,22 @@ export const fetchProducts = createAsyncThunk<Product[]>(
     return response.data;
   }
 );
-
+export const updateProduct = createAsyncThunk(
+  "products/updateProduct",
+  async ({
+    productId,
+    updatedData,
+  }: {
+    productId: number;
+    updatedData: Partial<Product>;
+  }) => {
+    const response = await axios.patch(
+      `https://fakestoreapi.com/products/${productId}`,
+      updatedData
+    );
+    return response.data;
+  }
+);
 const productsSlice = createSlice({
   name: "products",
   initialState,
@@ -70,17 +85,29 @@ const productsSlice = createSlice({
         fetchProducts.fulfilled,
         (state, action: PayloadAction<Product[]>) => {
           state.loading = false;
-          if (state.products.length > 0) {
-            state.products = [...state.products, ...action.payload];
-          } else {
-            state.products = action.payload;
-          }
+          const newProducts = action.payload.filter(
+            (newProduct) =>
+              !state.products.some(
+                (existingProduct) => existingProduct.id === newProduct.id
+              )
+          );
+          state.products = [...state.products, ...newProducts];
         }
       )
       .addCase(fetchProducts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Failed to fetch products";
-      });
+      })
+      .addCase(
+        updateProduct.fulfilled,
+        (state, action: PayloadAction<Product>) => {
+          state.products = state.products.map((product) =>
+            product.id === action.payload.id
+              ? { ...product, ...action.payload }
+              : product
+          );
+        }
+      );
   },
 });
 

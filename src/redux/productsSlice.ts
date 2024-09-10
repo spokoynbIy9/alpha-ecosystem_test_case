@@ -25,8 +25,8 @@ export const fetchProducts = createAsyncThunk<Product[]>(
     return response.data;
   }
 );
-export const updateProduct = createAsyncThunk(
-  "products/updateProduct",
+export const updateProductPatch = createAsyncThunk(
+  "products/updateProductPatch",
   async ({
     productId,
     updatedData,
@@ -35,6 +35,23 @@ export const updateProduct = createAsyncThunk(
     updatedData: Partial<Product>;
   }) => {
     const response = await axios.patch(
+      `https://fakestoreapi.com/products/${productId}`,
+      updatedData
+    );
+    return response.data;
+  }
+);
+
+export const updateProductPut = createAsyncThunk(
+  "products/updateProductPut",
+  async ({
+    productId,
+    updatedData,
+  }: {
+    productId: number;
+    updatedData: Partial<Product>;
+  }) => {
+    const response = await axios.put(
       `https://fakestoreapi.com/products/${productId}`,
       updatedData
     );
@@ -99,7 +116,15 @@ const productsSlice = createSlice({
         state.error = action.error.message || "Failed to fetch products";
       })
       .addCase(
-        updateProduct.fulfilled,
+        updateProductPut.fulfilled,
+        (state, action: PayloadAction<Product>) => {
+          state.products = state.products.map((product) =>
+            product.id === action.payload.id ? action.payload : product
+          );
+        }
+      )
+      .addCase(
+        updateProductPatch.fulfilled,
         (state, action: PayloadAction<Product>) => {
           state.products = state.products.map((product) =>
             product.id === action.payload.id

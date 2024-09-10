@@ -4,16 +4,39 @@ import { fetchProductById } from "../../../../redux/productByIdSlice";
 import { ProductInfoProps } from "../../../../types/productById";
 import useStyles from "../styles";
 import { Product } from "../../../../types/products";
-import { updateProduct } from "../../../../redux/productsSlice";
+import {
+  updateProductPatch,
+  updateProductPut,
+} from "../../../../redux/productsSlice";
 const ProductInfo: React.FC<ProductInfoProps> = ({ productId }) => {
   const dispatch = useAppDispatch();
   const { productInfo } = useAppSelector((state) => state.productById);
-  const [updatedProduct, setUpdatedProduct] = useState<Partial<Product>>({});
+  const [updatedProduct, setUpdatedProduct] = useState<Partial<Product>>({
+    id: productId,
+  });
   const [successMessage, setSuccesMessage] = useState("");
   const classes = useStyles();
+  const isAllFieldsUpdated = (original: Product, updated: Partial<Product>) => {
+    const fields: (keyof Product)[] = [
+      "title",
+      "price",
+      "description",
+      "image",
+    ];
+    return fields.every((field) => original[field] !== updated[field]);
+  };
   const editProduct = async () => {
     try {
-      await dispatch(updateProduct({ productId, updatedData: updatedProduct }));
+      const usePut = isAllFieldsUpdated(productInfo, updatedProduct);
+      if (usePut) {
+        await dispatch(
+          updateProductPut({ productId, updatedData: updatedProduct })
+        );
+      } else {
+        await dispatch(
+          updateProductPatch({ productId, updatedData: updatedProduct })
+        );
+      }
       dispatch(fetchProductById(productId));
       setSuccesMessage("You have just updated the product info.");
     } catch (error) {
@@ -23,6 +46,16 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ productId }) => {
   useEffect(() => {
     dispatch(fetchProductById(productId));
   }, [dispatch, productId]);
+
+  useEffect(() => {
+    if (successMessage) {
+      const timeoutId = setTimeout(() => {
+        setSuccesMessage("");
+      }, 5000);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [successMessage]);
   return (
     <div className={classes.productCard_container}>
       <img src={productInfo.image} alt="" />

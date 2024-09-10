@@ -12,8 +12,8 @@ const initialState: ProductsState = {
   filters: {
     searchQuery: "",
     priceRange: {
-      min: 0,
-      max: 100,
+      min: 10,
+      max: 50,
     },
   },
   pagination: { currentPage: 1, productsPerPage: 10 },

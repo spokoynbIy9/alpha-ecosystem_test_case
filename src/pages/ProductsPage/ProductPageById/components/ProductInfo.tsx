@@ -58,16 +58,25 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ productId }) => {
   }, [successMessage]);
   return (
     <div className={classes.productCard_container}>
-      <img src={productInfo.image} alt="" />
+      <img
+        className={classes.productInfo_image}
+        src={productInfo.image}
+        alt=""
+      />
       <div className={classes.productInfoAndEdit_container}>
         <div className={classes.productInfo_container}>
-          <h3>{productInfo.title}</h3>
-          <p>{productInfo.description}</p>
-          <span>{productInfo.price}</span>
+          <h3 className={classes.productInfo_title}>{productInfo.title}</h3>
+          <p className={classes.productInfo_description}>
+            {productInfo.description}
+          </p>
+          <span className={classes.productInfo_price}>
+            {productInfo.price} $
+          </span>
         </div>
         <div className={classes.editor_container}>
-          <h3>Editor</h3>
+          <h3 className={classes.editor_title}>Editor</h3>
           <input
+            className={classes.editor_input}
             type="text"
             placeholder="New img"
             value={updatedProduct.image || productInfo.image}
@@ -76,6 +85,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ productId }) => {
             }
           />
           <input
+            className={classes.editor_input}
             type="text"
             placeholder="New title"
             value={updatedProduct.title || productInfo.title}
@@ -84,6 +94,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ productId }) => {
             }
           />
           <input
+            className={classes.editor_input}
             type="text"
             placeholder="New description"
             value={updatedProduct.description || productInfo.description}
@@ -95,6 +106,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ productId }) => {
             }
           />
           <input
+            className={classes.editor_input}
             type="number"
             placeholder="New price"
             value={updatedProduct.price || productInfo.price}
@@ -105,7 +117,9 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ productId }) => {
               })
             }
           />
-          <button onClick={editProduct}>Edit Product</button>
+          <button className={classes.editor_button} onClick={editProduct}>
+            Edit Product
+          </button>
           {successMessage && <p>{successMessage}</p>}
         </div>
       </div>

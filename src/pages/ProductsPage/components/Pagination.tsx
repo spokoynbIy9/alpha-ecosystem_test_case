@@ -1,13 +1,14 @@
 import { PaginationProps } from "../../../types/products";
+import useStyles from "../styles";
 const Pagination: React.FC<PaginationProps> = ({
   currentPage,
   totalPages,
   onPageChange,
 }) => {
   const pageNumbers = [...Array(totalPages)].map((_, idx) => idx + 1);
-
+  const classes = useStyles();
   return (
-    <div>
+    <div className={classes.paginationContainer}>
       {pageNumbers.map((number) => (
         <button
           key={number}

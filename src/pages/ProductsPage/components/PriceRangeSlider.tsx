@@ -6,14 +6,17 @@ import { setCurrentPage } from "../../../redux/productsSlice";
 const PriceRangeSlider = () => {
   const dispatch = useAppDispatch();
   const products = useAppSelector((state) => state.products.products);
+
   const priceRange = useAppSelector(
     (state) => state.products.filters.priceRange
   );
+
   const [minPrice, maxPrice] = useMemo(() => {
     if (products.length === 0) return [0, 100];
     const prices = products.map((product) => product.price);
     return [Math.min(...prices), Math.max(...prices)];
   }, [products]);
+
   const handleSliderChange = (event: Event, value: number | number[]) => {
     if (Array.isArray(value)) {
       dispatch(setPriceRange({ min: value[0], max: value[1] }));
@@ -21,6 +24,10 @@ const PriceRangeSlider = () => {
     }
   };
 
+  const marks = [
+    { value: minPrice, label: `$${minPrice}` },
+    { value: maxPrice, label: `$${maxPrice}` },
+  ];
   return (
     <Slider
       min={minPrice}
@@ -29,10 +36,7 @@ const PriceRangeSlider = () => {
       step={1}
       valueLabelDisplay="auto"
       onChange={handleSliderChange}
-      marks={[
-        { value: priceRange.min, label: `$${priceRange.min}` },
-        { value: priceRange.max, label: `$${priceRange.max}` },
-      ]}
+      marks={marks}
     />
   );
 };

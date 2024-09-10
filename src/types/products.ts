@@ -23,4 +23,14 @@ export type ProductsState = {
       max: number;
     };
   };
+  pagination: {
+    currentPage: number;
+    productsPerPage: number;
+  };
+};
+
+export type PaginationProps = {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
 };

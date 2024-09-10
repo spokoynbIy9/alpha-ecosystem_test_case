@@ -5,10 +5,12 @@ import { Product } from "../../../types/products";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import ProductItem from "./ProductItem";
 import useStyles from "../styles";
+import { setCurrentPage } from "../../../redux/productsSlice";
+import Pagination from "./Pagination";
 const ProductsList = () => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
-  const { products, favorites, filters } = useAppSelector(
+  const { products, favorites, filters, pagination } = useAppSelector(
     (state) => state.products
   );
 
@@ -29,13 +31,35 @@ const ProductsList = () => {
         product.price <= filters.priceRange.max
     );
 
+  //pagination logic
+  const indexOfLastProduct =
+    pagination.currentPage * pagination.productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - pagination.productsPerPage;
+  const currentProducts = filteredProducts.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+
+  const totalPages = Math.ceil(
+    filteredProducts.length / pagination.productsPerPage
+  );
+
+  const handlePageChange = (page: number) => {
+    dispatch(setCurrentPage(page));
+  };
+
   return (
     <>
       <ul className={classes.productList}>
-        {filteredProducts.map((product: Product) => (
+        {currentProducts.map((product: Product) => (
           <ProductItem key={product.id} product={product} />
         ))}
       </ul>
+      <Pagination
+        currentPage={pagination.currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </>
   );
 };

@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { setPriceRange } from "../../../redux/productsSlice";
 import { useMemo } from "react";
 import Slider from "@mui/material/Slider";
+import { setCurrentPage } from "../../../redux/productsSlice";
 const PriceRangeSlider = () => {
   const dispatch = useAppDispatch();
   const products = useAppSelector((state) => state.products.products);
@@ -16,6 +17,7 @@ const PriceRangeSlider = () => {
   const handleSliderChange = (event: Event, value: number | number[]) => {
     if (Array.isArray(value)) {
       dispatch(setPriceRange({ min: value[0], max: value[1] }));
+      dispatch(setCurrentPage(1));
     }
   };
 

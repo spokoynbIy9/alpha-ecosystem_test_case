@@ -16,6 +16,7 @@ const initialState: ProductsState = {
       max: 100,
     },
   },
+  pagination: { currentPage: 1, productsPerPage: 10 },
 };
 
 export const fetchProducts = createAsyncThunk<Product[]>(
@@ -92,6 +93,12 @@ const productsSlice = createSlice({
     ) => {
       state.filters.priceRange = action.payload;
     },
+    setCurrentPage: (state, action: PayloadAction<number>) => {
+      state.pagination.currentPage = action.payload;
+    },
+    setProductsPerPage: (state, action: PayloadAction<number>) => {
+      state.pagination.productsPerPage = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -143,5 +150,7 @@ export const {
   addProduct,
   setSearchQuery,
   setPriceRange,
+  setCurrentPage,
+  setProductsPerPage,
 } = productsSlice.actions;
 export default productsSlice.reducer;

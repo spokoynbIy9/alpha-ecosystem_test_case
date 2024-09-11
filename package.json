@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "deploy": "gh-pages -d dist",
+    "deploy": "gh-pages -d dist -r git@github.com:spokoynbIy9/alpha-ecosystem_test_case.git",
     "lint": "eslint .",
     "preview": "vite preview"
   },

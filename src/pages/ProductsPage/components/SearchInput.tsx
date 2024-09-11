@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import { useAppDispatch } from "../../../redux/hooks";
 import { setSearchQuery } from "../../../redux/productsSlice";
 import { debounce } from "../../../utils/debounce";

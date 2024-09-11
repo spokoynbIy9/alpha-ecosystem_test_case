@@ -3,7 +3,6 @@ import { ProductById } from "../types/productById";
 import axios from "axios";
 import { RootState } from "./store";
 import { isEmptyObject } from "../utils/isEmptyObject";
-import { create } from "@mui/material/styles/createTransitions";
 const initialState: ProductById = {
   productInfo: {
     id: 0,

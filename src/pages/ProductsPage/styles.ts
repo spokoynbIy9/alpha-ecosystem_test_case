@@ -5,7 +5,7 @@ const truncateText = (lines: number) => ({
   whiteSpace: "normal",
   display: "-webkit-box",
   WebkitLineClamp: lines,
-  WebkitBoxOrient: "vertical",
+  WebkitBoxOrient: "vertical" as const,
 });
 const useStyles = makeStyles({
   "@global": {

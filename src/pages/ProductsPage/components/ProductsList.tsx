@@ -1,9 +1,6 @@
 import { useEffect } from "react";
 
-import {
-  fetchProducts,
-  setSkipFetchAfterDelete,
-} from "../../../redux/productsSlice";
+import { fetchProducts } from "../../../redux/productsSlice";
 import { Product } from "../../../types/products";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import ProductItem from "./ProductItem";

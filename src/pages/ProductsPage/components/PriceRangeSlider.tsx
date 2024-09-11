@@ -17,7 +17,7 @@ const PriceRangeSlider = () => {
     return [Math.min(...prices), Math.max(...prices)];
   }, [products]);
 
-  const handleSliderChange = (event: Event, value: number | number[]) => {
+  const handleSliderChange = (_event: Event, value: number | number[]) => {
     if (Array.isArray(value)) {
       dispatch(setPriceRange({ min: value[0], max: value[1] }));
       dispatch(setCurrentPage(1));

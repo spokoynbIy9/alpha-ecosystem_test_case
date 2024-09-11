@@ -17,6 +17,7 @@ const initialState: ProductsState = {
     },
   },
   pagination: { currentPage: 1, productsPerPage: 10 },
+  skipFetchAfterDelete: false,
 };
 
 export const fetchProducts = createAsyncThunk<Product[]>(
@@ -67,6 +68,10 @@ const productsSlice = createSlice({
       state.products = state.products.filter(
         (product) => product.id !== action.payload
       );
+      state.skipFetchAfterDelete = true;
+    },
+    setSkipFetchAfterDelete(state, action) {
+      state.skipFetchAfterDelete = action.payload;
     },
     addToFavorite: (state, action: PayloadAction<number>) => {
       const productId = action.payload;
@@ -116,6 +121,13 @@ const productsSlice = createSlice({
               )
           );
           state.products = [...state.products, ...newProducts];
+          if (state.products.length > 0) {
+            const prices = state.products.map((product) => product.price);
+            const minPrice = Math.min(...prices);
+            const maxPrice = Math.max(...prices);
+
+            state.filters.priceRange = { min: minPrice, max: maxPrice };
+          }
         }
       )
       .addCase(fetchProducts.rejected, (state, action) => {
@@ -152,5 +164,6 @@ export const {
   setPriceRange,
   setCurrentPage,
   setProductsPerPage,
+  setSkipFetchAfterDelete,
 } = productsSlice.actions;
 export default productsSlice.reducer;

@@ -5,7 +5,9 @@ import useStyles from "../styles";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { addToFavorite, deleteProduct } from "../../../redux/productsSlice";
 import { useNavigate } from "react-router-dom";
-const ProductItem: React.FC<{ product: Product }> = ({ product }) => {
+const ProductItem: React.FC<{
+  product: Product;
+}> = ({ product }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [isFavorite, setIsFavorite] = useState(false);

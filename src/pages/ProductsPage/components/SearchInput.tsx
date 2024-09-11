@@ -17,6 +17,7 @@ const SearchInput = () => {
       className={classes.search_input}
       type="text"
       placeholder="Search products by title"
+      name="searchInput"
       onChange={handleChange}
     />
   );

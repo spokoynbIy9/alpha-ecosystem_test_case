@@ -9,3 +9,7 @@ export type ProductById = {
 export type ProductInfoProps = {
   productId: number;
 };
+
+export type EditorProductInfoProps = {
+  productId: number;
+}

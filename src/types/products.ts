@@ -27,6 +27,7 @@ export type ProductsState = {
     currentPage: number;
     productsPerPage: number;
   };
+  skipFetchAfterDelete: boolean;
 };
 
 export type PaginationProps = {

@@ -30,6 +30,7 @@ const useStyles = makeStyles({
   buttonsWrapper: {
     display: "flex",
     justifyContent: "space-between",
+    marginTop: "auto",
   },
   productList: {
     display: "flex",
@@ -52,7 +53,7 @@ const useStyles = makeStyles({
     cursor: "pointer",
     gap: "10px",
   },
-  productDesc: truncateText(2),
+  productDesc: { ...truncateText(2), flexGrow: 1 },
   productTitle: truncateText(1),
   productsPage_container: {
     maxWidth: "1240px",

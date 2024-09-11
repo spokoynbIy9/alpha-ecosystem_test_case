@@ -1,6 +1,9 @@
 import { useEffect } from "react";
 
-import { fetchProducts } from "../../../redux/productsSlice";
+import {
+  fetchProducts,
+  setSkipFetchAfterDelete,
+} from "../../../redux/productsSlice";
 import { Product } from "../../../types/products";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import ProductItem from "./ProductItem";
@@ -10,13 +13,14 @@ import Pagination from "./Pagination";
 const ProductsList = () => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
-  const { products, favorites, filters, pagination } = useAppSelector(
-    (state) => state.products
-  );
+  const { products, favorites, filters, pagination, skipFetchAfterDelete } =
+    useAppSelector((state) => state.products);
 
   useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch, products.length]);
+    if (!skipFetchAfterDelete) {
+      dispatch(fetchProducts());
+    }
+  }, [dispatch, skipFetchAfterDelete]);
 
   const filteredProducts = products
     .filter((product) =>
